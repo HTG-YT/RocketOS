@@ -74,29 +74,23 @@ void kernel_main(void) {
     //terminal_start();
 
     char dest_buf[512] = "You shouldn't be seeing this text\n"; /// prints page fault to qemu terminal when buf is >= 408 elements
-    char src_buf[512] = "EPIC VICTORY\n";
+    //char src_buf[512] = "EPIC VICTORY\n";
     terminal_writestring(dest_buf);
     time_sleep_ticks(1);
 
-    kprintf("%s\n" "before ide_initialize:\n");
-    ide_print_register_debug_info();
     kprintf("%s", "\n\n\n");
+
 
     ide_initialize(0x1F0, 0x3F4, 0x170, 0x374, 0x000);
 
-    kprintf("%s\n" "after ide_initialize:\n");
 
-    //ide_print_register_debug_info();
-
-    ide_write_sectors((unsigned char)3,1,0,0,(unsigned int)src_buf);
-
-    ide_read_sectors((unsigned char)3,1,0,0,(unsigned int)dest_buf);
-
-    kprintf("%s", "error package: ");
-    kprintf("%c", get_error_package());
+    //ide_soft_reset();
+    kprintf("%s", "just called ide_soft_reset\n");
 
 
+    //ide_write_sectors(0,1,3,0,(unsigned int)"This is the text written to LBA 3");
 
+    ide_read_sectors(0, 1, 3, 0, (unsigned int) dest_buf);
 
     terminal_writestring(dest_buf);
 
