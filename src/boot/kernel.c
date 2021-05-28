@@ -90,7 +90,7 @@ void kernel_main(void) {
 
     //ide_write_sectors(0,1,3,0,(unsigned int)"This is the text written to LBA 3");
 
-    ide_read_sectors(0, 1, 3, 0, (unsigned int) dest_buf);
+    ide_read_sectors(0, 1, 2, 0, (unsigned int) dest_buf);
 
     terminal_writestring(dest_buf);
 
